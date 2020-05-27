@@ -51,10 +51,16 @@ function draw(){
     
     if(gameState == "end"){
         console.log("GAME OVER")
-        text("PRESS R TO RESTART",100,200)
+        text("PRESS R TO RESTART",100,200)        
         if(keyCode === 82){
+            maskGroup.destroyEach();
+            virusGroup.destroyEach();
+            soapGroup.destroyEach();
+            handShakeGroup.destroyEach();
             gameState = "toStart";
         }
+        spawnVirusRate = 60;
+        virusVelocity = 4;
         
     }
         
@@ -63,8 +69,6 @@ function draw(){
         spawnSoap();
         spawnMask();
         spawnHandShake();
-        drawSprites();
-        player.collide(invisibleGround);
         player.velocityY = player.velocityY+0.8;   
         if (player.isTouching(virusGroup)){
             gameState = "end"
@@ -78,7 +82,10 @@ function draw(){
         if (player.isTouching(handShakeGroup)){
             handShakeHit();
         }
+        drawSprites();
     }
+    player.collide(invisibleGround);
+    
 }
 
 function keyPressed(){
